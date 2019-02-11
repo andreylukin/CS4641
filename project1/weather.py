@@ -9,7 +9,6 @@ import numpy as np
 import matplotlib.pyplot as plt  
 import pandas as pd  
 
-
 from sklearn import datasets
 import sklearn.ensemble as ske
 
@@ -19,17 +18,29 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 def knn(n):
 
+    # ls = preprocessing.LabelEncoder()
+    # lq = preprocessing.LabelEncoder()
+    # part=lq.fit_transform(titanic_data['Part of the day'].values)
+    # district=ls.fit_transform(titanic_data['District Name'].values)
+    # lm = preprocessing.LabelEncoder()
+    # neighborhood=lm.fit_transform(titanic_data['Neighborhood Name'].values)
+    # lk = preprocessing.LabelEncoder()
+    # street=lk.fit_transform(titanic_data['Street'].values)
+    # lj = preprocessing.LabelEncoder()
+    # month=lj.fit_transform(titanic_data['Month'].values)
+    # lf = preprocessing.LabelEncoder()
+    # injuries=lf.fit_transform(titanic_data['Mild injuries'].values)
 
-
-
-    titanic_data = pd.read_csv('./data/titanic_data.csv')
-
-    titanic_data = titanic_data.drop('Cabin', 1)
+    titanic_data = pd.read_csv('./data/weatherAUS.csv')
     titanic_data = titanic_data.dropna()
-    knn = KNeighborsClassifier(n_neighbors=n)
+    titanic_data = titanic_data.iloc[0:1000]
     le = preprocessing.LabelEncoder()
-    label=le.fit_transform(titanic_data['Sex'].values)
-    X_train, X_test, y_train, y_test = train_test_split(list(zip(titanic_data['Age'].values, titanic_data['Pclass'].values, titanic_data['Fare'].values, label)), titanic_data['Survived'].values, test_size=0.3) # 70% training and 30% test
+    location=le.fit_transform(titanic_data['Location'].values)
+
+    X_train, X_test, y_train, y_test = train_test_split(list(zip( titanic_data['Humidity3pm'].values, titanic_data['MinTemp'].values, titanic_data['MaxTemp'].values, titanic_data['Pressure9am'].values)), location, test_size=0.3) # 70% training and 30% test
+
+    knn = KNeighborsClassifier(n_neighbors=n)
+
     knn.fit(X_train,y_train)
     predictions = knn.predict(X_test)
     return [knn.score(X_train, y_train), knn.score(X_test, y_test), cross_val_score(knn, X_train, y_train).mean()]
@@ -73,14 +84,18 @@ def nn(n):
     # mlp.fit(X_train,y_train)
     # predictions = mlp.predict(X_test)
     # print("Accuracy:",metrics.accuracy_score(y_test, predictions))
-
-    titanic_data = pd.read_csv('./data/titanic_data.csv')
-    titanic_data = titanic_data.drop('Cabin', 1)
+    titanic_data = pd.read_csv('./data/weatherAUS.csv')
     titanic_data = titanic_data.dropna()
-    mlp = MLPClassifier(hidden_layer_sizes=(n, n, n, n),max_iter=500)
+    titanic_data = titanic_data.iloc[0:1000]
     le = preprocessing.LabelEncoder()
-    label=le.fit_transform(titanic_data['Sex'].values)
-    X_train, X_test, y_train, y_test = train_test_split(list(zip(titanic_data['Age'].values, titanic_data['Pclass'].values, titanic_data['Fare'].values, label)), titanic_data['Survived'].values, test_size=0.3) # 70% training and 30% test
+    location=le.fit_transform(titanic_data['Location'].values)
+
+    X_train, X_test, y_train, y_test = train_test_split(list(zip( titanic_data['Humidity3pm'].values, titanic_data['MinTemp'].values, titanic_data['MaxTemp'].values, titanic_data['Pressure9am'].values)), location, test_size=0.3) # 70% training and 30% test
+
+
+
+    mlp = MLPClassifier(hidden_layer_sizes=(n, n, n, n),max_iter=500)
+    
 
     mlp.fit(X_train,y_train)
     # predictions = mlp.predict(X_test)
@@ -90,12 +105,13 @@ def nn(n):
 def svm(n):
 
 
-    titanic_data = pd.read_csv('./data/titanic_data.csv')
-    titanic_data = titanic_data.drop('Cabin', 1)
+    titanic_data = pd.read_csv('./data/weatherAUS.csv')
     titanic_data = titanic_data.dropna()
+    titanic_data = titanic_data.iloc[0:1000]
     le = preprocessing.LabelEncoder()
-    label=le.fit_transform(titanic_data['Sex'].values)
-    X_train, X_test, y_train, y_test = train_test_split(list(zip(titanic_data['Age'].values, titanic_data['Pclass'].values, titanic_data['Fare'].values, label)), titanic_data['Survived'].values, test_size=0.3) # 70% training and 30% test
+    location=le.fit_transform(titanic_data['Location'].values)
+
+    X_train, X_test, y_train, y_test = train_test_split(list(zip( titanic_data['Humidity3pm'].values, titanic_data['MinTemp'].values, titanic_data['MaxTemp'].values, titanic_data['Pressure9am'].values)), location, test_size=0.3) # 70% training and 30% test
     svclassifier = SVC(kernel='rbf', degree=n)  
     svclassifier.fit(X_train, y_train)  
     # predictions = svclassifier.predict(X_test)
@@ -120,30 +136,57 @@ def svm(n):
 
 
 def decision_tree(n):
-    titanic_data = pd.read_csv('./data/titanic_data.csv')
-    titanic_data = titanic_data.drop('Cabin', 1)
+    
+
+
+
+
+     
+
+    # titanic_data = titanic_data.drop('Cabin', 1)
+    # titanic_data = titanic_data.dropna()
+    # le = preprocessing.LabelEncoder()
+    # label=le.fit_transform(titanic_data['Specific Bean Origin or Bar Name'].values)
+    
+    # cacao_percent_string = titanic_data['Cocoa Percent'].values
+    # cacao_percent = []
+    # for f in cacao_percent_string:
+    #         f = float(f.strip('%')) / 100.0
+    #         cacao_percent.append(f)
+
+    # ln = preprocessing.LabelEncoder()
+    # label2 = ln.fit_transform(titanic_data['Company (Maker-if known)'].values)
+
+    # ls = preprocessing.LabelEncoder()
+    # label3 = ls.fit_transform(titanic_data['Broad Bean Origin'].values)
+
+    titanic_data = pd.read_csv('./data/weatherAUS.csv')
     titanic_data = titanic_data.dropna()
+    titanic_data = titanic_data.iloc[0:1000]
     le = preprocessing.LabelEncoder()
-    label=le.fit_transform(titanic_data['Sex'].values)
-    X_train, X_test, y_train, y_test = train_test_split(list(zip(titanic_data['Age'].values, titanic_data['Pclass'].values, titanic_data['Fare'].values, label)), titanic_data['Survived'].values, test_size=0.3) # 70% training and 30% test
+    location=le.fit_transform(titanic_data['Location'].values)
+
+    X_train, X_test, y_train, y_test = train_test_split(list(zip( titanic_data['Humidity3pm'].values, titanic_data['MinTemp'].values, titanic_data['MaxTemp'].values, titanic_data['Pressure9am'].values)), location, test_size=0.3) # 70% training and 30% test
     dec_tree = tree.DecisionTreeClassifier(max_depth=n)
     dec_tree.fit(X_train, y_train) 
+
+    return [dec_tree.score(X_train, y_train), dec_tree.score(X_test, y_test), cross_val_score(dec_tree, X_train, y_train).mean()]
     # print dec_tree.score(X_train, y_train) 
     # print dec_tree.score(X_test, y_test) 
-    return [dec_tree.score(X_train, y_train), dec_tree.score(X_test, y_test), cross_val_score(dec_tree, X_train, y_train).mean()]
     # predictions = dec_tree.predict(X_test)
     # print '{0}'.format(cross_val_score(dec_tree, X_train, y_train).mean())
 
 
 
 def decision_tree_boost(n):
-    titanic_data = pd.read_csv('./data/titanic_data.csv')
-    titanic_data = titanic_data.drop('Cabin', 1)
+    titanic_data = pd.read_csv('./data/weatherAUS.csv')
     titanic_data = titanic_data.dropna()
+    titanic_data = titanic_data.iloc[0:1000]
     le = preprocessing.LabelEncoder()
-    label=le.fit_transform(titanic_data['Sex'].values)
-    X_train, X_test, y_train, y_test = train_test_split(list(zip(titanic_data['Age'].values, titanic_data['Pclass'].values, titanic_data['Fare'].values, label)), titanic_data['Survived'].values, test_size=0.3) # 70% training and 30% test
-    dec_tree = ske.AdaBoostClassifier(base_estimator=tree.DecisionTreeClassifier(max_depth=2), n_estimators= n)
+    location=le.fit_transform(titanic_data['Location'].values)
+
+    X_train, X_test, y_train, y_test = train_test_split(list(zip( titanic_data['Humidity3pm'].values, titanic_data['MinTemp'].values, titanic_data['MaxTemp'].values, titanic_data['Pressure9am'].values)), location, test_size=0.3) # 70% training and 30% test
+    dec_tree = ske.AdaBoostClassifier(base_estimator=tree.DecisionTreeClassifier(max_depth=6), n_estimators= n)
     dec_tree.fit(X_train, y_train)  
     predictions = dec_tree.predict(X_test)
     # print '{0}'.format(metrics.accuracy_score(y_test, predictions))
@@ -193,10 +236,12 @@ train = []
 test = []
 cross = []
 for x in range(1, 100):
-    a, b, c = decision_tree_boost(x)
-    # print a
-    # print b
-    # print c
+    print x
+    a, b, c = decision_tree(x)
+    # a, b, c = nn(x)
+    # a, b, c = knn(x)
+    # a, b, c = svm(x)
+    # a, b, c = decision_tree_boost(x)
     train.append(a)
     test.append(b)
     cross.append(c)
