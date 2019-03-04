@@ -1,6 +1,9 @@
 Andrey Lukin
 alukin3
 
+Code found at
+https://github.com/andreylukin/CS4641/tree/master/project2
+
 
 To compile this code run `ant` in this directory.
 
